@@ -50,8 +50,7 @@ nmcli -f TYPE,TIMESTAMP,NAME con show | gawk '$1 == "wifi" { nn = ""; for (i = 3
 
 print_seperator
 echo "[23 + 24] public wifi networks or weak security:"
-nmcli -f TYPE,TIMESTAMP,NAME con show | grep wifi | awk '{ s = ""; for (i = 3; i <= NF; i++) s = s $i " "; print s}' | awk '{$1=$1};1' |xargs -I{} nmcli connection show {} -s
-
+nmcli -f TYPE,TIMESTAMP,NAME con show | grep wifi | awk '{ s = ""; for (i = 3; i <= NF; i++) s = s $i " "; print s}' | awk '{$1=$1};1' | uniq | xargs -I{} nmcli connection show {} -s | grep -e connection.id -e 802-11-wireless-security.key-mgmt
 print_seperator
 echo "[25 + 26] installed programs inkl. versions:"
 dnf list
